@@ -1,6 +1,7 @@
 .DS_*
 .vscode/
 test
+ft_ssl
 # Prerequisites
 *.d
 
