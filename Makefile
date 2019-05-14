@@ -1,32 +1,27 @@
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
-NAME = libft.a
+NAME = ft_ssl
 
-SRC = ft_atoi.c ft_bzero.c ft_itoa_base_u.c ft_memalloc.c ft_numlen.c \
-ft_strcmp.c ft_strcpy.c ft_strdup.c ft_strjoin.c ft_strlen.c ft_strnew.c
+SRC = main.c ssl_printer.c ssl_parser.c
 OBJ = $(SRC:.c=.o)
+LIB = ./libft/libft.a
 
-PFSRC = ft_printf.c pf_parser.c pf_make_string.c pf_make_feg.c \
-		pf_printer.c pf_support.c pf_support_feg.c
-PFOBJ =  $(PFSRC:.c=.o)
-PFDIR = ./printf/
-
-.PHONY: all clean fclean re dep
+.PHONY: all clean fclean re lib
 
 all: $(NAME)
 
 $(NAME): dep
-	$(CC) $(FLAGS) -c $(SRC)
-	ar rc $(NAME) $(OBJ) $(PFOBJ)
-	ranlib $(NAME)
+	$(CC) $(FLAGS) $(SRC) $(LIB) -o $(NAME)
 
 dep:
-	$(CC) $(FLAGS) -c $(patsubst %, $(PFDIR)%, $(PFSRC))
+	$(MAKE) -C ./libft/
 
 clean:
-	rm -f $(OBJ) $(PFOBJ)
+	rm -f $(OBJ)
+	$(MAKE) -C ./libft/ clean
 
 fclean:	clean
 	rm -f $(NAME)
+	$(MAKE) -C ./libft/ fclean
 
 re: fclean all
