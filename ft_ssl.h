@@ -37,5 +37,8 @@ char	*ft_sha256(char *str);
 
 void	ssl_perr(t_ssl_opt *opt, t_ssl_disp *disp, char *cmd, t_err err);
 char	**ssl_parser(int argc, char **argv, t_ssl_opt *opt);
+void	ssl_iterator(char **argv, t_ssl_opt *opt);
+char	*ft_md5(char *s);
+char	*ft_sha256(char *s);
 
 #endif
