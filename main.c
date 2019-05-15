@@ -12,7 +12,7 @@ char		*ft_sha256(char *str)
 	return (str);
 }
 
-static int	find_dgst(char *str, t_ssl_disp *disp)
+static int	find_dgst(char *str, t_ssl_disp *disp, t_ssl_opt *opt)
 {
 	int	i;
 
@@ -20,13 +20,17 @@ static int	find_dgst(char *str, t_ssl_disp *disp)
 	while (++i < DGST_COUNT)
 	{
 		if (!ft_strcmp(str, disp[i].cmd))
+		{
+			opt->func = &disp[i];
 			return (i);
+		}
 	}
 	return (-1);
 }
 
 static void	options_init(t_ssl_opt *opt)
 {
+	opt->func = NULL;
 	opt->p = 0;
 	opt->q = 0;
 	opt->r = 0;
@@ -53,7 +57,6 @@ int			main(int argc, char **argv)
 	t_ssl_disp	disp[DGST_COUNT];
 	t_ssl_opt	opt;
 	int			digest;
-	int			argnum;
 
 	if (argc < 2)
 		ssl_perr(0, 0, 0, no_arg);
@@ -61,11 +64,11 @@ int			main(int argc, char **argv)
 	{
 		dispatcher_init(disp);
 		options_init(&opt);
-		if ((digest = find_dgst(argv[1], disp) == -1))
-			ssl_perr(argv[1], disp, 0, inv_cmd);
+		if ((digest = find_dgst(argv[1], disp, &opt) == -1))
+			ssl_perr(&opt, disp, argv[1], inv_cmd);
 		else
 		{
-			if (!(ssl_parser(argv, &opt, &argnum)))
+			if (!(argv = ssl_parser(argc - 2, &argv[2], &opt)))
 				return (1);
 			else
 				iterator();
