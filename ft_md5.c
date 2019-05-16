@@ -3,5 +3,5 @@
 char		*ft_md5(char *s)
 {
 	s[0] = 'M';
-	return (str);
+	return (s);
 }

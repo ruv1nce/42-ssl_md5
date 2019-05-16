@@ -16,17 +16,17 @@ PFDIR = ./printf/
 all: $(NAME)
 
 $(NAME): dep
-	$(CC) $(FLAGS) -c $(SRC)
-	ar rc $(NAME) $(OBJ) $(PFOBJ)
-	ranlib $(NAME)
+	@$(CC) $(FLAGS) -c $(SRC)
+	@ar rc $(NAME) $(OBJ) $(PFOBJ)
+	@ranlib $(NAME)
 
 dep:
-	$(CC) $(FLAGS) -c $(patsubst %, $(PFDIR)%, $(PFSRC))
+	@$(CC) $(FLAGS) -c $(patsubst %, $(PFDIR)%, $(PFSRC))
 
 clean:
-	rm -f $(OBJ) $(PFOBJ)
+	@rm -f $(OBJ) $(PFOBJ)
 
 fclean:	clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all

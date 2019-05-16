@@ -1,16 +1,31 @@
 #include "ft_ssl.h"
 
-static char	*read_stdin(t_ssl_opt *opt)
-{
+extern t_ssl_opt	g_opt;
 
+static void	read_stdin()
+{
+	char		buf[BUF_SIZE];
+	uint32_t	ret;
+	char		*tmp;
+
+	while ((ret = read(0, buf, BUF_SIZE)))
+	{
+		g_opt.printed = 1;
+		tmp = NULL;
+		if (g_opt.msg)
+			tmp = g_opt.msg;
+		g_opt.msg = ft_strjoin(g_opt.msg, buf);
+		if (tmp)
+			free(tmp);
+	}
 }
 
-void		ssl_iterator(char **argv, t_ssl_opt *opt)
+void		ssl_iterator(char **argv)
 {
-	/* Read stdin and use read_stdin's output as an input for
-		hashing function from the dispatcher table.
-		Print the resulting hash with ssl_prhash func. */
-	ssl_prhash((*opt->func->dgst)(read_stdin(opt)), opt);
+	/* read stdin */
+	if (argv)
+		argv = argv + 1;
+	read_stdin();
 
 	// do the -s "strings"
 	// read the files

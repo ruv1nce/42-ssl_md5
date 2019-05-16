@@ -1,6 +1,8 @@
 #include "ft_ssl.h"
 
-static int	parse_arg(char *arg, t_ssl_opt *opt)
+extern t_ssl_opt	g_opt;
+
+static int	parse_arg(char *arg)
 {
 	int	j;
 
@@ -8,37 +10,45 @@ static int	parse_arg(char *arg, t_ssl_opt *opt)
 	while (arg[++j])
 	{
 		if (arg[j] == 'p')
-			opt->p = 1;
+			g_opt.p = 1;
 		else if (arg[j] == 'q')
-			opt->q = 1;
+			g_opt.q = 1;
 		else if (arg[j] == 'r')
-			opt->r = 1;
+			g_opt.r = 1;
 		else
 		{
-			opt->ill = arg[j];
-			ssl_perr(opt, 0, 0, ill_opt);
+			g_opt.ill = arg[j];
+			ssl_perr(0, 0, ill_opt);
 			return (0);
 		}
 	}
 	return (1);
 }
 
-char	**ssl_parser(int argc, char **argv, t_ssl_opt *opt)
+int	ssl_parser(int argc, char **argv, int i)
 {
-	int	i;
-
 	/* iterate through args */
-	i = -1;
-	while (++i < argc)
+	while (i < argc)
 	{
-		/* return current argument if it's a file name or -s option */
-		if (argv[i][0] != '-' || (argv[i][0] == '-' && argv[i][1] == 's'))
-			return (&argv[i]);
+		/* return current argument if it's a file name */
+		if (argv[i][0] != '-')
+			return (i);
+		/* if it's an -s option, check that there's a string after it */
+		if (argv[i][0] == '-' && argv[i][1] == 's')
+		{
+			if (i == argc - 1)
+			{
+				ssl_perr(0, 0, no_string);
+				return (0);
+			}
+			else
+				return(i);
+		}
 		/* iterate through chars of current arg, starting from 1, because
 			there was a '-' in position 0 */
-		if (!(parse_arg(&argv[i][1], opt)))
+		if (!(parse_arg(&argv[i][1])))
 			return (0);
+		i++;
 	}
-	ssl_perr(opt, 0, 0, file_unspec);
-	return (0);
+	return (i);
 }

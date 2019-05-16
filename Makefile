@@ -2,7 +2,7 @@ CC = gcc
 FLAGS = -Wall -Wextra -Werror
 NAME = ft_ssl
 
-SRC = main.c ssl_printer.c ssl_parser.c
+SRC = main.c ssl_printer.c ssl_parser.c ssl_iterator.c ft_md5.c ft_sha256.c
 OBJ = $(SRC:.c=.o)
 LIB = ./libft/libft.a
 
@@ -11,17 +11,22 @@ LIB = ./libft/libft.a
 all: $(NAME)
 
 $(NAME): dep
-	$(CC) $(FLAGS) $(SRC) $(LIB) -o $(NAME)
+	@echo "rigging elections..."
+	@$(CC) $(FLAGS) $(SRC) $(LIB) -o $(NAME)
+	@echo "done"
 
 dep:
-	$(MAKE) -C ./libft/
+	@echo "hacking penthagon mainframe..."
+	@$(MAKE) -C ./libft/
 
 clean:
-	rm -f $(OBJ)
-	$(MAKE) -C ./libft/ clean
+	@echo "taking care of eywitnesses..."
+	@rm -f $(OBJ)
+	@$(MAKE) -C ./libft/ clean
 
 fclean:	clean
-	rm -f $(NAME)
-	$(MAKE) -C ./libft/ fclean
+	@echo "buying off judges..."
+	@rm -f $(NAME)
+	@$(MAKE) -C ./libft/ fclean
 
 re: fclean all
