@@ -19,36 +19,31 @@ static int	parse_arg(char *arg)
 		{
 			g_opt.ill = arg[j];
 			ssl_perr(0, 0, ill_opt);
-			return (0);
 		}
 	}
 	return (1);
 }
 
-int	ssl_parser(int argc, char **argv, int *i)
+void	ssl_parser(int *argc, char **argv, int *i)
 {
-	/* iterate through args */
-	while (*i < argc)
+	int	j;
+
+	/* parse options (and skip them as args) */
+	while (*i < *argc && argv[*i][0] == '-' && argv[*i][1] != 's')
 	{
-		/* return current argument if it's a file name */
-		if (argv[*i][0] != '-')
-			return (1);
-		/* if it's an -s option, check that there's a string after it */
-		if (argv[*i][0] == '-' && argv[*i][1] == 's')
-		{
-			if (*i == argc - 1)
-			{
-				ssl_perr(0, 0, no_string);
-				return (0);
-			}
-			else
-				return(1);
-		}
-		/* iterate through chars of current arg, starting from 1, because
-			there was a '-' in position 0 */
-		if (!(parse_arg(&argv[*i][1])))
-			return (0);
+		parse_arg(&argv[*i][1]);
 		(*i)++;
 	}
-	return (1);
+	/* Check all -s options. If last -s is missing a string,
+		print error and decrement argc */
+	j = *i;
+	while (j < *argc && argv[j][0] == '-' && argv[j][1] == 's')
+	{
+		if (j == *argc - 1)
+		{
+			ssl_perr(0, 0, no_string);
+			(*argc)--;
+		}
+		j += 2;
+	}
 }

@@ -2,7 +2,7 @@
 # define FT_SSL_H
 
 # define DGST_COUNT 2
-# define BUF_SIZE 64
+# define BUF_SIZE 4
 
 # include <stdlib.h>
 # include <sys/types.h>
@@ -18,7 +18,6 @@ typedef enum	error
 	inv_cmd,
 	ill_opt,
 	no_string,
-	file_unspec,
 }				t_err;
 
 typedef char	*(*t_dgst)(char*);
@@ -40,8 +39,8 @@ char	*ft_md5(char *str);
 char	*ft_sha256(char *str);
 
 void	ssl_perr(const char **cmds, char *arg, t_err err);
-int		ssl_parser(int argc, char **argv, int *i);
-void	ssl_iterator(char **argv);
+void	ssl_parser(int *argc, char **argv, int *i);
+void	ssl_iterator(int argc, char **argv);
 char	*ft_md5(char *s);
 char	*ft_sha256(char *s);
 
