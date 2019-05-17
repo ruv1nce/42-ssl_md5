@@ -16,6 +16,7 @@ static int	find_dgst(char *arg, const char **cmds, const t_dgst *digs)
 			return (i);
 		}
 	}
+	ssl_perr(cmds, arg, inv_cmd);
 	return (-1);
 }
 
@@ -31,27 +32,23 @@ int			main(int argc, char **argv)
 	{
 		/* find digest command, if it exists */
 		if ((find_dgst(argv[1], cmds, digs) == -1))
-			ssl_perr(cmds, argv[1], inv_cmd);
-		else
-		{
-			argc -= 2;
-			i = 0;
-			/* parse options if there are any */
-			if (argc && !(i = ssl_parser(argc, &argv[2], i)))
-				return (1);
-			///
-			printf("opt: cmd %s, p %u, q %u, r %u, printed %u\n", g_opt.cmd, g_opt.p, g_opt.q, g_opt.r, g_opt.printed);
-			if (i != argc)
-				printf("next arg %s\n", argv[i]);
-			///
+			return (1);
+		i = 2;
+		/* parse options if there are any */
+		if (argc > 2 && !(ssl_parser(argc, argv, &i)))
+			return (1);
+		///
+		printf("opt: cmd %s, p %u, q %u, r %u, printed %u\n", g_opt.cmd, g_opt.p, g_opt.q, g_opt.r, g_opt.printed);
+		if (i < argc)
+			printf("next arg %s\n", argv[i]);
+		///
 
-			/* iterate through sources */
-			if (i == argc)
-				ssl_iterator(NULL);
-			else
-				ssl_iterator(&argv[i]);
-			///
-			printf("%s\n", g_opt.msg);
-		}
+		/* iterate through sources */
+		if (i == argc)
+			ssl_iterator(NULL);
+		else
+			ssl_iterator(&argv[i]);
+		///
+		printf("%s\n", g_opt.msg);
 	}
 }

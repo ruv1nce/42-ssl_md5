@@ -8,6 +8,7 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <stdint.h>
 # include "libft/libft.h"
 
@@ -39,7 +40,7 @@ char	*ft_md5(char *str);
 char	*ft_sha256(char *str);
 
 void	ssl_perr(const char **cmds, char *arg, t_err err);
-int		ssl_parser(int argc, char **argv, int i);
+int		ssl_parser(int argc, char **argv, int *i);
 void	ssl_iterator(char **argv);
 char	*ft_md5(char *s);
 char	*ft_sha256(char *s);

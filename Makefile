@@ -12,7 +12,7 @@ all: $(NAME)
 
 $(NAME): dep
 	@echo "rigging elections..."
-	@$(CC) $(FLAGS) $(SRC) $(LIB) -o $(NAME)
+	@$(CC) -g $(FLAGS) $(SRC) $(LIB) -o $(NAME)
 	@echo "done"
 
 dep:

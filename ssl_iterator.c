@@ -5,10 +5,10 @@ extern t_ssl_opt	g_opt;
 static void	read_stdin()
 {
 	char		buf[BUF_SIZE];
-	uint32_t	ret;
+	// uint32_t	ret;
 	char		*tmp;
 
-	while ((ret = read(0, buf, BUF_SIZE)))
+	while (read(STDIN_FILENO, buf, BUF_SIZE))
 	{
 		g_opt.printed = 1;
 		tmp = NULL;
@@ -25,8 +25,10 @@ void		ssl_iterator(char **argv)
 	/* read stdin */
 	if (argv)
 		argv = argv + 1;
-	read_stdin();
-
+	if (g_opt.p)
+		read_stdin();
 	// do the -s "strings"
 	// read the files
+	// if (!g_opt.p)
+	// 	read_stdin();
 }
