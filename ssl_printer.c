@@ -2,7 +2,7 @@
 
 extern t_ssl_opt	g_opt;
 
-void	print_uppercase_cmd()
+void	print_uppercase_cmd(void)
 {
 	int		i;
 	char	c;
@@ -44,8 +44,8 @@ void	ssl_perr(const char **cmds, char *arg, t_err err)
 
 	if (err == no_string)
 	{
-		ft_printf("ft_ssl: %s: option requires an argument -- s\nusage: ft_ssl\
- %s [-pqr] [-s string] [files ...]\n", g_opt.cmd, g_opt.cmd);
+		ft_printf("ft_ssl: %s: option requires an argument -- s\nusage: \
+ft_ssl %s [-pqr] [-s string] [files ...]\n", g_opt.cmd, g_opt.cmd);
 		return ;
 	}
 	if (err == no_arg)

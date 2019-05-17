@@ -2,11 +2,11 @@
 
 extern t_ssl_opt	g_opt;
 
-static void	read_stdin()
+static void	read_stdin(void)
 {
-	char		buf[BUF_SIZE + 1];
+	char	buf[BUF_SIZE + 1];
 	int32_t	ret;
-	char		*tmp;
+	char	*tmp;
 
 	buf[BUF_SIZE] = 0;
 	while ((ret = read(0, buf, BUF_SIZE)))
@@ -21,9 +21,10 @@ static void	read_stdin()
 		if (tmp)
 			free(tmp);
 	}
+	g_opt.msglen = ft_strlen(g_opt.msg);
+	g_opt.src = std_input;
 	if (g_opt.p)
 		ft_printf("%s", g_opt.msg);
-	g_opt.src = std_input;
 	(*g_opt.dgst)(0);
 	g_opt.printed = 1;
 	free(g_opt.msg);
@@ -64,6 +65,7 @@ void		ssl_iterator(int argc, char **argv)
 			if (argv[i][0] == '-' && argv[i][1] == 's')
 			{
 				g_opt.msg = argv[++i];
+				g_opt.msglen = ft_strlen(g_opt.msg);
 				g_opt.src = string_arg;
 				(*g_opt.dgst)(0);
 				// ft_printf("%s\n", g_opt.msg);

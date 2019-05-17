@@ -40,6 +40,7 @@ typedef struct	s_ssl_options
 	uint8_t		ill;
 	uint8_t		printed;
 	char		*msg;
+	uint32_t	msglen;
 	char		*filename;
 	t_source	src;
 }				t_ssl_opt;
