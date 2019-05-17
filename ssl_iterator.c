@@ -74,7 +74,7 @@ void		ssl_iterator(int argc, char **argv)
 		g_opt.msg = 0;
 		/* read files */
 		i--;
-		while (i++ < argc)
+		while (++i < argc)
 			read_file(argv[i]);
 	}
 	if (!g_opt.printed)
