@@ -33,15 +33,13 @@ int			main(int argc, char **argv)
 	/* parse options if there are any */
 	if (argc > 2)
 		ssl_parser(&argc, argv, &i);
-	///
+
 	// printf("opt: cmd %s, p %u, q %u, r %u, printed %u\n", g_opt.cmd, g_opt.p, g_opt.q, g_opt.r, g_opt.printed);
 	// if (i < argc)
 		// printf("next arg = argv[%i] %s\n", i, argv[i]);
-	///
-
-	/* iterate through sources */
 	// printf("i %i, argc %i\n", i, argc);	//////
 
+	/* iterate through sources */
 	if (i == argc)
 		ssl_iterator(0, 0);
 	else

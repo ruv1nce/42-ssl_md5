@@ -1,7 +1,11 @@
 #include "ft_ssl.h"
 
-char		*ft_md5(char *s)
+extern t_ssl_opt	g_opt;
+
+void	ft_md5(int fd)
 {
-	s[0] = 'M';
-	return (s);
+	if (fd)
+		print_hash("filehash");
+	else
+		print_hash("stringhash");
 }

@@ -39,6 +39,8 @@ void	ssl_parser(int *argc, char **argv, int *i)
 	j = *i;
 	while (j < *argc && argv[j][0] == '-' && argv[j][1] == 's')
 	{
+		if (!g_opt.p)
+			g_opt.printed = 1;
 		if (j == *argc - 1)
 		{
 			ssl_perr(0, 0, no_string);

@@ -1,7 +1,7 @@
 #include "ft_ssl.h"
 
-char	*ft_sha256(char *s)
+void	ft_sha256(int fd)
 {
-	s[0] = 'S';
-	return (s);
+	if (fd)
+		return ;
 }
