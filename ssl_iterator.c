@@ -13,7 +13,7 @@ static void	read_stdin(void)
 	{
 		if (ret == -1)
 			ssl_perr(0, 0, bad_read);
-		// ft_printf("ret %u\n", ret);
+		ft_printf("ret %u\n", ret);
 		if (ret < BUF_SIZE)
 			buf[ret] = 0;
 		tmp = (g_opt.msg) ? g_opt.msg : NULL;
@@ -25,9 +25,11 @@ static void	read_stdin(void)
 	g_opt.src = std_input;
 	if (g_opt.p)
 		ft_printf("%s", g_opt.msg);
+	tmp = (g_opt.msg) ? g_opt.msg : NULL;
 	(*g_opt.dgst)(0);
+	if (tmp)
+		free(tmp);
 	g_opt.printed = 1;
-	free(g_opt.msg);
 	g_opt.msg = 0;
 }
 
@@ -66,6 +68,7 @@ void		ssl_iterator(int argc, char **argv)
 			{
 				g_opt.msg = argv[++i];
 				g_opt.msglen = ft_strlen(g_opt.msg);
+				g_opt.lentmp = g_opt.msglen;
 				g_opt.src = string_arg;
 				(*g_opt.dgst)(0);
 				// ft_printf("%s\n", g_opt.msg);
