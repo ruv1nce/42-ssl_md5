@@ -2,6 +2,24 @@
 
 extern t_ssl_opt	g_opt;
 
+char	*stos(uint8_t *hash, int n)
+{
+	const char	*val = "0123456789abcdef";
+	char		*str;
+	int			i;
+
+	str = ft_memalloc(sizeof(char) * (n * 2 + 1));
+	i = 0;
+	while (i < n * 2)
+	{
+		str[i] = val[*hash / 16];
+		str[i + 1] = val[*hash % 16];
+		hash++;
+		i += 2;
+	}
+	return (str);
+}
+
 void	print_uppercase_cmd(void)
 {
 	int		i;

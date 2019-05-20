@@ -2,7 +2,7 @@
 
 extern t_ssl_opt	g_opt;
 
-static void	read_stdin(void)
+static void			read_stdin(void)
 {
 	char	buf[BUF_SIZE + 1];
 	int32_t	ret;
@@ -42,7 +42,7 @@ static void	read_stdin(void)
 	g_opt.msg = 0;
 }
 
-static void	read_string(char *str)
+static void			read_string(char *str)
 {
 	g_opt.msg = str;
 	g_opt.filename = g_opt.msg;
@@ -54,7 +54,7 @@ static void	read_string(char *str)
 	g_opt.printed = 1;
 }
 
-static void	read_file(char *file)
+static void			read_file(char *file)
 {
 	int	fd;
 
@@ -72,7 +72,7 @@ static void	read_file(char *file)
 	close(fd);
 }
 
-void		ssl_iterator(int argc, char **argv)
+void				ssl_iterator(int argc, char **argv)
 {
 	int	i;
 
@@ -91,6 +91,7 @@ void		ssl_iterator(int argc, char **argv)
 				break;
 		}
 		g_opt.msg = 0;
+		g_opt.msglen = 0;
 		/* read files */
 		i--;
 		while (++i < argc)

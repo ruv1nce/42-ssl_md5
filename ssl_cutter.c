@@ -19,7 +19,7 @@ void	reverse_bytes(void *s, size_t n)
 	}
 }
 
-static void	ssl_padder(uint8_t *buf, int64_t len, uint8_t *pad_done)
+static void	ssl_padder(uint8_t *buf, int64_t len, uint8_t *pad_done, t_end end)
 {
 	int				padlen;
 	static int8_t	oneadded;
@@ -39,6 +39,8 @@ static void	ssl_padder(uint8_t *buf, int64_t len, uint8_t *pad_done)
 		ft_bzero(buf + len, padlen);
 		len += padlen;
 		*(uint64_t*)(buf + BUF_SIZE - LEN_SIZE) = g_opt.msglen * 8;
+		if (end == big_end)
+			reverse_bytes(buf + BUF_SIZE - LEN_SIZE, LEN_SIZE);
 		*pad_done = 1;
 		oneadded = 0;
 	}
@@ -46,7 +48,7 @@ static void	ssl_padder(uint8_t *buf, int64_t len, uint8_t *pad_done)
 		ft_bzero(buf + len, BUF_SIZE - len);
 }
 
-void		get_block(int fd, uint8_t *buf, uint8_t *pad_done)
+void		get_block(int fd, uint8_t *buf, uint8_t *pad_done, t_end end)
 {
 	int64_t	len;
 
@@ -76,5 +78,5 @@ void		get_block(int fd, uint8_t *buf, uint8_t *pad_done)
 		}
 	}
 	if (len < BUF_SIZE)
-		ssl_padder(buf, len, pad_done);
+		ssl_padder(buf, len, pad_done, end);
 }

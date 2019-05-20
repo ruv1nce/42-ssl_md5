@@ -35,6 +35,12 @@ typedef enum	error
 	bad_read,
 }				t_err;
 
+typedef enum	endian
+{
+	big_end,
+	ltl_end,
+}				t_end;
+
 typedef enum	source
 {
 	std_input,
@@ -66,7 +72,9 @@ void			ssl_parser(int *argc, char **argv, int *i);
 void			ssl_iterator(int argc, char **argv);
 void			ft_md5(int fd);
 void			ft_sha256(int fd);
-void			get_block(int fd, uint8_t *buf, uint8_t *pad_done);
+void			reverse_bytes(void *s, size_t n);
+void			get_block(int fd, uint8_t *buf, uint8_t *pad_done, t_end end);
+char			*stos(uint8_t *hash, int n);
 void			print_hash();
 
 #endif

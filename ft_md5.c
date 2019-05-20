@@ -76,22 +76,12 @@ static uint32_t		*get_hash(uint8_t *block, uint32_t cur_hash[4])
 	return (new_hash);
 }
 
-char				*stos(uint8_t *hash, int n)
+static void			init_hash(uint32_t *cur_hash)
 {
-	const char	*val = "0123456789abcdef";
-	char		*str;
-	int			i;
-
-	str = ft_memalloc(sizeof(char) * (n * 2 + 1));
-	i = 0;
-	while (i < n * 2)
-	{
-		str[i] = val[*hash / 16];
-		str[i + 1] = val[*hash % 16];
-		hash++;
-		i += 2;
-	}
-	return (str);
+	cur_hash[0] = 0x67452301;
+	cur_hash[1] = 0xefcdab89;
+	cur_hash[2] = 0x98badcfe;
+	cur_hash[3] = 0x10325476;
 }
 
 void				ft_md5(int fd)
@@ -103,14 +93,11 @@ void				ft_md5(int fd)
 	uint32_t	*new_hash;
 
 	buf[BUF_SIZE] = 0;
-	cur_hash[0] = 0x67452301;
-	cur_hash[1] = 0xefcdab89;
-	cur_hash[2] = 0x98badcfe;
-	cur_hash[3] = 0x10325476;
+	init_hash(cur_hash);
 	pad_done = 0;
 	while (!pad_done)
 	{
-		get_block(fd, buf, &pad_done);
+		get_block(fd, buf, &pad_done, ltl_end);
 		new_hash = get_hash(buf, cur_hash);
 		i = -1;
 		while (++i < 4)
