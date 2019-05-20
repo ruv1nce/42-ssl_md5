@@ -4,7 +4,7 @@ NAME = libft.a
 
 SRC = ft_atoi.c ft_bzero.c ft_itoa_base_u.c ft_memalloc.c ft_numlen.c\
 ft_strcmp.c ft_strcpy.c ft_strdup.c ft_strjoin.c ft_strlen.c ft_strnew.c\
-ft_strncpy.c ft_bchar.c
+ft_strncpy.c ft_bchar.c ft_memcpy.c
 OBJ = $(SRC:.c=.o)
 
 PFSRC = ft_printf.c pf_parser.c pf_make_string.c pf_make_feg.c \

@@ -2,6 +2,23 @@
 
 extern t_ssl_opt	g_opt;
 
+void	reverse_bytes(void *s, size_t n)
+{
+	uint32_t	i;
+	uint8_t		tmp;
+
+	i = 0;
+	n--;
+	while (i < n)
+	{
+		tmp = ((uint8_t*)s)[i];
+		((uint8_t*)s)[i] = ((uint8_t*)s)[n];
+		((uint8_t*)s)[n] = tmp;
+		i++;
+		n--;
+	}
+}
+
 static void	ssl_padder(uint8_t *buf, int64_t len, uint8_t *pad_done)
 {
 	int				padlen;
@@ -15,25 +32,31 @@ static void	ssl_padder(uint8_t *buf, int64_t len, uint8_t *pad_done)
 		oneadded = 1;
 	}
 	else
-		buf[len++] = 'W';
+		buf[len++] = 0;
 	/* if we can fit 8B of msglen in the end */
 	if (padlen >= 0)
 	{
-		ft_bchar(buf + len, 'X', padlen);
+		ft_bzero(buf + len, padlen);
 		len += padlen;
 		*(uint64_t*)(buf + BUF_SIZE - LEN_SIZE) = g_opt.msglen * 8;
 		*pad_done = 1;
 		oneadded = 0;
 	}
 	else
-	{
-		ft_bchar(buf + len, 'Y', BUF_SIZE - len);	//
-	}
+		ft_bzero(buf + len, BUF_SIZE - len);
 }
 
-int			get_block(int fd, uint8_t *buf, uint8_t *pad_done)
+void		get_block(int fd, uint8_t *buf, uint8_t *pad_done)
 {
 	int64_t	len;
+
+	// write(1, "\n", 1);
+	// int i = -1;///
+	// while (++i < (int)g_opt.msglen)///
+	// 	ft_printf("%hhi ", g_opt.msg[i]);///
+	// write(1, "\n", 1);///
+	// ft_printf("msglen %i\n", g_opt.msglen);///
+
 
 	if (fd)
 	{
@@ -53,10 +76,5 @@ int			get_block(int fd, uint8_t *buf, uint8_t *pad_done)
 		}
 	}
 	if (len < BUF_SIZE)
-	{
-		// ft_printf("%s, len %i, %s\n", buf, len);	//
 		ssl_padder(buf, len, pad_done);
-		// ft_printf("%s\n", buf);	//
-	}
-	return (len);
 }

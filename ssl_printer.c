@@ -17,21 +17,21 @@ void	print_uppercase_cmd(void)
 	}
 }
 
-void	print_hash(char *hash)
+void	print_hash()
 {
 	if (g_opt.src != std_input && !g_opt.q && !g_opt.r)
 	{
 		print_uppercase_cmd();
 		if (g_opt.src == string_arg)
-			ft_printf(" (\"%s\") = ", g_opt.msg);
+			ft_printf(" (\"%s\") = ", g_opt.filename);
 		if (g_opt.src == file_arg)
 			ft_printf(" (%s) = ", g_opt.filename);
 	}
-	ft_printf("%s", hash);
+	ft_printf("%s", g_opt.hash);
 	if (g_opt.src != std_input && g_opt.r && !g_opt.q)
 	{
 		if (g_opt.src == string_arg)
-			ft_printf(" \"%s\"", g_opt.msg);
+			ft_printf(" \"%s\"", g_opt.filename);
 		if (g_opt.src == file_arg)
 			ft_printf(" %s", g_opt.filename);
 	}

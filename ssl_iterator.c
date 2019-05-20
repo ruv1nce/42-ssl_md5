@@ -13,7 +13,6 @@ static void	read_stdin(void)
 	{
 		if (ret == -1)
 			ssl_perr(0, 0, bad_read);
-		ft_printf("ret %u\n", ret);
 		if (ret < BUF_SIZE)
 			buf[ret] = 0;
 		tmp = (g_opt.msg) ? g_opt.msg : NULL;
@@ -22,21 +21,44 @@ static void	read_stdin(void)
 			free(tmp);
 	}
 	g_opt.msglen = ft_strlen(g_opt.msg);
+	g_opt.lentmp = ft_strlen(g_opt.msg);
+	g_opt.lentmp = g_opt.msglen;
 	g_opt.src = std_input;
 	if (g_opt.p)
 		ft_printf("%s", g_opt.msg);
 	tmp = (g_opt.msg) ? g_opt.msg : NULL;
+
+	// write(1, "\n", 1);
+	// int i = -1;///
+	// while (++i < (int)g_opt.msglen)///
+	// 	ft_printf("%hhi ", g_opt.msg[i]);///
+	// write(1, "\n", 1);///
+
 	(*g_opt.dgst)(0);
+	print_hash();
 	if (tmp)
 		free(tmp);
 	g_opt.printed = 1;
 	g_opt.msg = 0;
 }
 
+static void	read_string(char *str)
+{
+	g_opt.msg = str;
+	g_opt.filename = g_opt.msg;
+	g_opt.msglen = ft_strlen(g_opt.msg);
+	g_opt.lentmp = g_opt.msglen;
+	g_opt.src = string_arg;
+	(*g_opt.dgst)(0);
+	print_hash();
+	g_opt.printed = 1;
+}
+
 static void	read_file(char *file)
 {
 	int	fd;
 
+	g_opt.printed = 1;
 	if ((fd = open(file, O_RDONLY)) == -1)
 	{
 		ft_printf("ft_ssl: %s: %s: No such file or directory\n",\
@@ -46,9 +68,8 @@ static void	read_file(char *file)
 	g_opt.src = file_arg;
 	g_opt.filename = file;
 	(*g_opt.dgst)(fd);
-	// ft_printf("%s\n", file);
+	print_hash();
 	close(fd);
-	g_opt.printed = 1;
 }
 
 void		ssl_iterator(int argc, char **argv)
@@ -65,14 +86,7 @@ void		ssl_iterator(int argc, char **argv)
 		while (++i < argc)
 		{
 			if (argv[i][0] == '-' && argv[i][1] == 's')
-			{
-				g_opt.msg = argv[++i];
-				g_opt.msglen = ft_strlen(g_opt.msg);
-				g_opt.lentmp = g_opt.msglen;
-				g_opt.src = string_arg;
-				(*g_opt.dgst)(0);
-				// ft_printf("%s\n", g_opt.msg);
-			}
+				read_string(argv[++i]);
 			else
 				break;
 		}
