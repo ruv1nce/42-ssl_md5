@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ssl.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dfonarev <dfonarev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/20 00:36:49 by dfonarev          #+#    #+#             */
+/*   Updated: 2019/05/20 00:36:54 by dfonarev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_SSL_H
 # define FT_SSL_H
 
-# define DGST_COUNT 2
+# define DGST_COUNT 3
 # define BUF_SIZE 64
 # define LEN_SIZE 8
 
@@ -71,6 +83,7 @@ void			ssl_perr(const char **cmds, char *arg, t_err err);
 void			ssl_iterator(int argc, char **argv);
 void			ft_md5(int fd);
 void			ft_sha256(int fd);
+void			ft_sha224(int fd);
 void			reverse_bytes(void *s, size_t n);
 void			get_block(int fd, uint8_t *buf, uint8_t *pad_done, t_end end);
 char			*stos(uint8_t *hash, int n);

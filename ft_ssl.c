@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ssl.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dfonarev <dfonarev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/20 00:36:59 by dfonarev          #+#    #+#             */
+/*   Updated: 2019/05/20 00:37:03 by dfonarev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ssl.h"
 
 t_ssl_opt	g_opt;
@@ -78,8 +90,8 @@ static void	find_dgst(char *arg, const char **cmds, const t_dgst *digs)
 
 int			main(int argc, char **argv)
 {
-	const char		*cmds[] = {"md5", "sha256"};
-	const t_dgst	digs[] = {ft_md5, ft_sha256};
+	const char		*cmds[] = {"md5", "sha256", "sha224"};
+	const t_dgst	digs[] = {ft_md5, ft_sha256, ft_sha224};
 	int				i;
 
 	if (argc < 2)

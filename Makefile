@@ -2,7 +2,8 @@ CC = gcc
 FLAGS = -Wall -Wextra -Werror
 NAME = ft_ssl
 
-SRC = ft_ssl.c ssl_printer.c ssl_iterator.c ft_md5.c ft_sha256.c
+SRC = ft_ssl.c ssl_printer.c ssl_cutter.c ssl_iterator.c\
+	ft_md5.c ft_sha256.c ft_sha224.c
 OBJ = $(SRC:.c=.o)
 LIB = ./libft/libft.a
 
@@ -12,7 +13,7 @@ all: $(NAME)
 
 $(NAME): dep
 	@echo "rigging elections..."
-	@$(CC) -g $(FLAGS) $(SRC) $(LIB) -o $(NAME)
+	@$(CC) $(FLAGS) $(SRC) $(LIB) -o $(NAME)
 	@echo "done"
 
 dep:

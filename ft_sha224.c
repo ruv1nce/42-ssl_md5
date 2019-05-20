@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sha256.c                                        :+:      :+:    :+:   */
+/*   ft_sha224.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dfonarev <dfonarev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/20 00:37:07 by dfonarev          #+#    #+#             */
-/*   Updated: 2019/05/20 00:37:08 by dfonarev         ###   ########.fr       */
+/*   Created: 2019/05/20 00:37:17 by dfonarev          #+#    #+#             */
+/*   Updated: 2019/05/20 00:37:19 by dfonarev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,23 @@ static uint32_t		*get_hash(uint8_t *block, uint32_t cur_hash[8])
 
 static void			init_hash(uint32_t *cur_hash)
 {
-	cur_hash[0] = 0x6a09e667;
-	cur_hash[1] = 0xbb67ae85;
-	cur_hash[2] = 0x3c6ef372;
-	cur_hash[3] = 0xa54ff53a;
-	cur_hash[4] = 0x510e527f;
-	cur_hash[5] = 0x9b05688c;
-	cur_hash[6] = 0x1f83d9ab;
-	cur_hash[7] = 0x5be0cd19;
+	cur_hash[0] = 0xc1059ed8;
+	cur_hash[1] = 0x367cd507;
+	cur_hash[2] = 0x3070dd17;
+	cur_hash[3] = 0xf70e5939;
+	cur_hash[4] = 0xffc00b31;
+	cur_hash[5] = 0x68581511;
+	cur_hash[6] = 0x64f98fa7;
+	cur_hash[7] = 0xbefa4fa4;
 }
 
-void				ft_sha256(int fd)
+void				ft_sha224(int fd)
 {
 	uint8_t		buf[BUF_SIZE + 1];
+	int			i;
+	uint8_t		pad_done;
 	uint32_t	cur_hash[8];
 	uint32_t	*new_hash;
-	uint8_t		pad_done;
-	int			i;
 
 	buf[BUF_SIZE] = 0;
 	init_hash(cur_hash);
@@ -118,5 +118,5 @@ void				ft_sha256(int fd)
 	i = -1;
 	while (++i < 8)
 		reverse_bytes(cur_hash + i, sizeof(int));
-	g_opt.hash = stos((uint8_t*)cur_hash, 32);
+	g_opt.hash = stos((uint8_t*)cur_hash, 28);
 }

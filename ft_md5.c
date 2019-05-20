@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_md5.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dfonarev <dfonarev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/20 00:40:10 by dfonarev          #+#    #+#             */
+/*   Updated: 2019/05/20 00:40:11 by dfonarev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ssl.h"
 
 extern t_ssl_opt	g_opt;
@@ -87,10 +99,10 @@ static void			init_hash(uint32_t *cur_hash)
 void				ft_md5(int fd)
 {
 	uint8_t		buf[BUF_SIZE + 1];
-	int			i;
-	uint8_t		pad_done;
 	uint32_t	cur_hash[4];
 	uint32_t	*new_hash;
+	uint8_t		pad_done;
+	int			i;
 
 	buf[BUF_SIZE] = 0;
 	init_hash(cur_hash);
