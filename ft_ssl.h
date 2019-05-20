@@ -26,7 +26,7 @@
 # include <stdint.h>
 # include "libft/libft.h"
 
-typedef enum	error
+typedef enum	e_error
 {
 	no_arg,
 	inv_cmd,
@@ -35,13 +35,13 @@ typedef enum	error
 	bad_read,
 }				t_err;
 
-typedef enum	endian
+typedef enum	e_endian
 {
 	big_end,
 	ltl_end,
 }				t_end;
 
-typedef enum	source
+typedef enum	e_source
 {
 	std_input,
 	string_arg,
@@ -68,7 +68,6 @@ typedef struct	s_ssl_options
 }				t_ssl_opt;
 
 void			ssl_perr(const char **cmds, char *arg, t_err err);
-void			ssl_parser(int *argc, char **argv, int *i);
 void			ssl_iterator(int argc, char **argv);
 void			ft_md5(int fd);
 void			ft_sha256(int fd);

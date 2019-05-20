@@ -24,18 +24,21 @@ static int	parse_arg(char *arg)
 	return (1);
 }
 
-void	ssl_parser(int *argc, char **argv, int *i)
+/*
+** parse options (and skip them as args)
+** check all -s options: if last -s is missing a string,
+**							print error and decrement argc
+*/
+
+void		ssl_parser(int *argc, char **argv, int *i)
 {
 	int	j;
 
-	/* parse options (and skip them as args) */
 	while (*i < *argc && argv[*i][0] == '-' && argv[*i][1] != 's')
 	{
 		parse_arg(&argv[*i][1]);
 		(*i)++;
 	}
-	/* Check all -s options. If last -s is missing a string,
-		print error and decrement argc */
 	j = *i;
 	while (j < *argc && argv[j][0] == '-' && argv[j][1] == 's')
 	{

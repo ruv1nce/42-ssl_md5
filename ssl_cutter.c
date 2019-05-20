@@ -2,7 +2,7 @@
 
 extern t_ssl_opt	g_opt;
 
-void	reverse_bytes(void *s, size_t n)
+void		reverse_bytes(void *s, size_t n)
 {
 	uint32_t	i;
 	uint8_t		tmp;
@@ -19,13 +19,18 @@ void	reverse_bytes(void *s, size_t n)
 	}
 }
 
+/*
+** add '1' bit (which equals to byte = 128)
+** if there's not enough space to store msglen, we will pad two blocks
+** inside last 8 bytes of padding we store msglen (in bits)
+*/
+
 static void	ssl_padder(uint8_t *buf, int64_t len, uint8_t *pad_done, t_end end)
 {
 	int				padlen;
 	static int8_t	oneadded;
 
 	padlen = BUF_SIZE - len - LEN_SIZE - 1;
-	/* put the 10000000 after msg and increment len */
 	if (!oneadded)
 	{
 		buf[len++] = 128;
@@ -33,7 +38,6 @@ static void	ssl_padder(uint8_t *buf, int64_t len, uint8_t *pad_done, t_end end)
 	}
 	else
 		buf[len++] = 0;
-	/* if we can fit 8B of msglen in the end */
 	if (padlen >= 0)
 	{
 		ft_bzero(buf + len, padlen);
@@ -48,17 +52,15 @@ static void	ssl_padder(uint8_t *buf, int64_t len, uint8_t *pad_done, t_end end)
 		ft_bzero(buf + len, BUF_SIZE - len);
 }
 
+/*
+** if there's a file source, read from file
+** if the source is a string, cut it into appropriate-sized blocks
+** append padding for the last 1 or 2 blocks
+*/
+
 void		get_block(int fd, uint8_t *buf, uint8_t *pad_done, t_end end)
 {
 	int64_t	len;
-
-	// write(1, "\n", 1);
-	// int i = -1;///
-	// while (++i < (int)g_opt.msglen)///
-	// 	ft_printf("%hhi ", g_opt.msg[i]);///
-	// write(1, "\n", 1);///
-	// ft_printf("msglen %i\n", g_opt.msglen);///
-
 
 	if (fd)
 	{

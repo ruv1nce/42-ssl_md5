@@ -101,10 +101,7 @@ void				ft_sha256(int fd)
 		new_hash = get_hash(buf, cur_hash);
 		i = -1;
 		while (++i < 8)
-		{
 			cur_hash[i] += new_hash[i];
-			// ft_printf("%u ", cur_hash[i]);	//
-		}
 	}
 	i = -1;
 	while (++i < 8)

@@ -35,7 +35,7 @@ void	print_uppercase_cmd(void)
 	}
 }
 
-void	print_hash()
+void	print_hash(void)
 {
 	if (g_opt.src != std_input && !g_opt.q && !g_opt.r)
 	{
@@ -54,6 +54,7 @@ void	print_hash()
 			ft_printf(" %s", g_opt.filename);
 	}
 	write(1, "\n", 1);
+	free(g_opt.hash);
 }
 
 void	ssl_perr(const char **cmds, char *arg, t_err err)

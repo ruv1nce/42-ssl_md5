@@ -2,7 +2,7 @@ CC = gcc
 FLAGS = -Wall -Wextra -Werror
 NAME = ft_ssl
 
-SRC = main.c ssl_printer.c ssl_parser.c ssl_iterator.c ft_md5.c ft_sha256.c
+SRC = ft_ssl.c ssl_printer.c ssl_iterator.c ft_md5.c ft_sha256.c
 OBJ = $(SRC:.c=.o)
 LIB = ./libft/libft.a
 

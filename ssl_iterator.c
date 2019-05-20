@@ -2,42 +2,37 @@
 
 extern t_ssl_opt	g_opt;
 
+/*
+** read BUF_SIZE bytes from stdin as long as there's stuff to read
+** join all that was read into one string
+** echo stdin if there's a -p flag
+** generate hash
+*/
+
 static void			read_stdin(void)
 {
 	char	buf[BUF_SIZE + 1];
 	int32_t	ret;
 	char	*tmp;
 
-	buf[BUF_SIZE] = 0;
 	while ((ret = read(0, buf, BUF_SIZE)))
 	{
 		if (ret == -1)
 			ssl_perr(0, 0, bad_read);
-		if (ret < BUF_SIZE)
-			buf[ret] = 0;
+		buf[ret] = 0;
 		tmp = (g_opt.msg) ? g_opt.msg : NULL;
 		g_opt.msg = ft_strjoin(g_opt.msg, buf);
-		if (tmp)
-			free(tmp);
+		tmp ? free(tmp) : 0;
 	}
 	g_opt.msglen = ft_strlen(g_opt.msg);
-	g_opt.lentmp = ft_strlen(g_opt.msg);
 	g_opt.lentmp = g_opt.msglen;
 	g_opt.src = std_input;
 	if (g_opt.p)
 		ft_printf("%s", g_opt.msg);
 	tmp = (g_opt.msg) ? g_opt.msg : NULL;
-
-	// write(1, "\n", 1);
-	// int i = -1;///
-	// while (++i < (int)g_opt.msglen)///
-	// 	ft_printf("%hhi ", g_opt.msg[i]);///
-	// write(1, "\n", 1);///
-
 	(*g_opt.dgst)(0);
 	print_hash();
-	if (tmp)
-		free(tmp);
+	tmp ? free(tmp) : 0;
 	g_opt.printed = 1;
 	g_opt.msg = 0;
 }
@@ -72,31 +67,34 @@ static void			read_file(char *file)
 	close(fd);
 }
 
+/*
+** read stdin
+** do the -s "strings"
+** read files
+*/
+
 void				ssl_iterator(int argc, char **argv)
 {
 	int	i;
 
-	/* read stdin */
 	if (g_opt.p)
 		read_stdin();
 	if (argv)
 	{
-		/* do the -s "strings" */
 		i = -1;
 		while (++i < argc)
 		{
 			if (argv[i][0] == '-' && argv[i][1] == 's')
 				read_string(argv[++i]);
 			else
-				break;
+				break ;
 		}
 		g_opt.msg = 0;
 		g_opt.msglen = 0;
-		/* read files */
 		i--;
 		while (++i < argc)
 			read_file(argv[i]);
 	}
 	if (!g_opt.printed)
-	 	read_stdin();
+		read_stdin();
 }

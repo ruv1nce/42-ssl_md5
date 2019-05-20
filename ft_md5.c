@@ -101,10 +101,7 @@ void				ft_md5(int fd)
 		new_hash = get_hash(buf, cur_hash);
 		i = -1;
 		while (++i < 4)
-		{
 			cur_hash[i] += new_hash[i];
-			// ft_printf("%u ", cur_hash[i]);	//
-		}
 	}
 	g_opt.hash = stos((uint8_t*)cur_hash, 16);
 }
